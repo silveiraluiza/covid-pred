@@ -8,8 +8,10 @@
 # etc...
 
 # ...even if they are in subdirectories
-!*/*.py
-!*/*.ipynb
+!data/*.py
+!data/*.ipynb
+!classification/*.py
+!classification/*.ipynb
 
 # if the files to be tracked are in subdirectories
 !*/*/*.py
