@@ -8,8 +8,12 @@
 # etc...
 
 # ...even if they are in subdirectories
+
+!data/
 !data/*.py
 !data/*.ipynb
+data/*
+
 !classification/*.py
 !classification/*.ipynb
 
