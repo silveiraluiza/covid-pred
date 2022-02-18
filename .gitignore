@@ -1,5 +1,4 @@
-# Ignore everything
-/*
+
 
 # But not these files...
 !.gitignore
@@ -7,15 +6,20 @@
 !*.ipynb
 # etc...
 
-# ...even if they are in subdirectories
-
 !data/
 !data/*.py
 !data/*.ipynb
 data/*
 
+
 !classification/*.py
 !classification/*.ipynb
+
+classification/*
+segmentation/*
+augmentation/*
+2_Raw/*
+3_Images/*
 
 # if the files to be tracked are in subdirectories
 !*/*/*.py
