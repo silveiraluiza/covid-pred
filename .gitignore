@@ -1,0 +1,16 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!*.py
+!*.ipynb
+# etc...
+
+# ...even if they are in subdirectories
+!*/*.py
+!*/*.ipynb
+
+# if the files to be tracked are in subdirectories
+!*/*/*.py
+!*/*/*.ipynb
