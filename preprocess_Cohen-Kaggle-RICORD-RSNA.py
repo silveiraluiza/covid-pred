@@ -11,7 +11,7 @@ import numpy as np
 np.random.seed(1996)
 
 # The dataset is composed by CXR images of pneumonia (any other, except COVID-19), COVID-19 and Normal.
-source_folders = ["A1", "A2", "Cohen", "Eurorad", "Radiopedia", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "BIMCV", "RICORD"]
+source_folders = [ "Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"] #"BIMCV"
 pneumonia_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity"]
 pathogen_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity", "COVID-19", "Normal"]
 origin_folder = "2_Raw"
@@ -82,7 +82,7 @@ for folder in source_folders:
           # Let's also resize the images so that all of them are standardize
           # Skip the image if it is too small
           w, h = img.shape
-          if w < 300:
+          if w < 250:
             continue
 
           img = cv2.resize(img, (img_size, img_size), interpolation = cv2.INTER_CUBIC)
