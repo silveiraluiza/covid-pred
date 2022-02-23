@@ -11,6 +11,7 @@
 *.zip
 *.JPG
 *.xlsx#
+*.json
 
 # Datasets
 *.txt
