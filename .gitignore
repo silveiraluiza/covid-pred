@@ -5,7 +5,10 @@
 *.png
 *.gif
 *.PNG
-
+2_Raw/*
+3_Images/*
+*.dcm
+*.zip
 
 # Datasets
 *.txt
