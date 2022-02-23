@@ -12,6 +12,8 @@
 *.JPG
 *.xlsx#
 *.json
+*.tif
+*.md5
 
 # Datasets
 *.txt
