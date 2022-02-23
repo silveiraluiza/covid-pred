@@ -10,6 +10,7 @@
 *.dcm
 *.zip
 *.JPG
+*.xlsx#
 
 # Datasets
 *.txt
