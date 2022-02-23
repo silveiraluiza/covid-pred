@@ -9,6 +9,7 @@
 3_Images/*
 *.dcm
 *.zip
+*.JPG
 
 # Datasets
 *.txt
@@ -18,6 +19,7 @@
 # Models
 *.h5
 
+*.DS_Store
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
