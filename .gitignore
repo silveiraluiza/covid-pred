@@ -14,6 +14,7 @@
 *.json
 *.tif
 *.md5
+*.db
 
 # Datasets
 *.txt
