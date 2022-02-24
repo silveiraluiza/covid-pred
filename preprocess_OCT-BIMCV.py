@@ -8,7 +8,6 @@ import numpy as np
 # The distribution is centered around the patient since each person can have multiple images in different days
 # So the idea is to keep all images from the same patient all in the same set (either train or test)
 
-np.random.seed(1996)
 
 # The dataset is composed by CXR images of pneumonia (any other, except COVID-19), COVID-19 and Normal.
 source_folders = [ "BIMCV", "OCT"] #"Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"

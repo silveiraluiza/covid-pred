@@ -52,7 +52,6 @@ bot = telebot.TeleBot("2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA")
 bot.config['api_key'] = TELEBOT_TOKEN
 bot.get_me()
 
-np.random.seed(587)
 
 # Função para carregar as imagens
 
