@@ -75,7 +75,8 @@ def create_model():
 def main():
   np.random.seed(SEED)
   ### Load Datasets
-
+  tf.keras.backend.clear_session()
+  
   file_pi = open('input/train_dataset.pkl', 'rb') 
   train_generator =  pickle.load(file_pi)
 

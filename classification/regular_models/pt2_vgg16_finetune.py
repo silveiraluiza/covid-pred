@@ -45,6 +45,8 @@ SEED = 587
 
 def main():
   np.random.seed(SEED)
+  tf.keras.backend.clear_session()
+
   ### Load Datasets
   file_pi = open('input/train_dataset.pkl', 'rb') 
   train_generator =  pickle.load(file_pi)
@@ -60,8 +62,6 @@ def main():
   print(f"Number of steps {steps_per_epoch}")
 
   ### Model Finetune
-
-  tf.keras.backend.clear_session()
   model_name = "cache/tl_vgg16_finetune_cd.h5"
   model = keras.models.load_model(model_name)
 
