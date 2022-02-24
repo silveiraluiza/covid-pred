@@ -52,7 +52,7 @@ bot = telebot.TeleBot("2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA")
 bot.config['api_key'] = TELEBOT_TOKEN
 bot.get_me()
 
-np.random.seed = 587
+np.random.seed(587)
 
 # Função para carregar as imagens
 
@@ -197,6 +197,7 @@ def main():
   text_file.close()
 
   print("Criação das bases finalizada")
+  bot.send_message("-600800507", f'Criação das bases finalizada')
 
 if __name__ == "__main__":
     main()
