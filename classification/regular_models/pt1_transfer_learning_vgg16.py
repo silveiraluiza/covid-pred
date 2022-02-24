@@ -5,31 +5,18 @@ import os
 import math
 import matplotlib.pyplot as plt
 import seaborn as sns
-import scipy.ndimage
-import skimage
-from skimage import io
-from skimage.segmentation import mark_boundaries
-from skimage.util import img_as_ubyte
 from pt0_load_data import AugmentationSequence 
 import cv2
 from albumentations import (
     Compose, HorizontalFlip, ShiftScaleRotate, ElasticTransform,
     RandomBrightness, RandomContrast, RandomGamma, CLAHE
 )
-
 import sklearn
-from sklearn import metrics
-from sklearn.metrics import roc_curve, auc
-from sklearn.utils import shuffle
-from sklearn.model_selection import train_test_split
 import telebot
 import time
 import tensorflow as tf
 from tensorflow import keras
 import datetime
-import lime
-from lime import lime_image
-
 import pandas as pd
 import pickle
 
@@ -102,7 +89,7 @@ def main():
 
   print(f"Number of steps {steps_per_epoch}")
 
-  # ## Fit Model
+  ### Fit Model
 
   reduce_learning_rate = keras.callbacks.ReduceLROnPlateau(
     monitor = "loss", 
