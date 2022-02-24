@@ -68,14 +68,9 @@ def main():
   tf.keras.backend.clear_session()
 
   ## Load Datasets
-  X_val = np.load('input/X_val.npy')
-  Y_val = np.load('input/Y_val.npy')
-
   X_train = np.load('input/X_train.npy')
   Y_train = np.load('input/Y_train.npy')
 
-  X_test = np.load('input/X_test.npy')
-  Y_test = np.load('input/Y_test.npy')
 
   ### Load Model
 
@@ -84,8 +79,6 @@ def main():
 
 
   ### Eval Train
-
-  print("Eval Train")
 
   train1, train2, train3, train4 = np.array_split(X_train, 4)
 
@@ -97,48 +90,64 @@ def main():
   del(X_train)
 
   # Pred Train 
-  Y_pred = model.predict(train1, batch_size=16)
+  Y_pred = model.predict(train1, batch_size=10)
   del(train1)
 
-  Y_pred1 = model.predict(train2, batch_size=16)
+  Y_pred1 = model.predict(train2, batch_size=10)
   del(train2)
 
-  Y_pred2 = model.predict(train3, batch_size=16)
+  Y_pred2 = model.predict(train3, batch_size=10)
   del(train3)
 
-  Y_pred3 = model.predict(train4, batch_size=16)
+  Y_pred3 = model.predict(train4, batch_size=10)
   del(train4)
 
   y_pred = np.concatenate((Y_pred, Y_pred1, Y_pred2, Y_pred3))
   del(Y_pred, Y_pred1, Y_pred2, Y_pred3)
 
+  print("Eval Train")
   df_cm_train, class_repo_train, f_score_train, acc_train = model_evaluation(y_pred, Y_train)
+  del(Y_train,y_pred)
 
   ### Eval Val
+  tf.keras.backend.clear_session()
+  model_name = "cache/tl_vgg16_finetune_cd.h5"
+  model = keras.models.load_model(model_name)
+  
+  ## Load Datasets
+  X_val = np.load('input/X_val.npy')
+  Y_val = np.load('input/Y_val.npy')
+  
+  Y_pred = model.predict(X_val, batch_size = 16)
+  del(X_val)
 
   print("Eval Val")
-
-  Y_pred = model.predict(X_val, batch_size = 16)
-  
   df_cm_val, class_repo_val, f_score_val, acc_val = model_evaluation(Y_pred, Y_val)
+  del(Y_val)
 
   ### Eval Test
+  tf.keras.backend.clear_session()
+  model_name = "cache/tl_vgg16_finetune_cd.h5"
+  model = keras.models.load_model(model_name)
+  
+  ## Load Datasets
+  X_test = np.load('input/X_test.npy')
+  Y_test = np.load('input/Y_test.npy')
 
-  print("Eval Test")
   start = time.time()
   Y_pred = model.predict(X_test, batch_size = 16)
   end = time.time()
+  del(X_test)
 
- 
+  print("Eval Test")
   df_cm_test, class_repo_test, f_score_test, acc_test = model_evaluation(Y_pred, Y_test)
-
+  del(Y_test)
   final_test = end-start
 
 
   ### Eval Test 2 
 
-  print("Eval Diff Test")
-  del(Y_pred,Y_test,Y_train,Y_val,y_pred,X_val,X_test)
+  del(Y_pred)
 
   tf.keras.backend.clear_session()
   model_name = "cache/tl_vgg16_finetune_cd.h5"
@@ -150,6 +159,7 @@ def main():
 
   Y_pred = model.predict(X_test2, batch_size = 12)
 
+  print("Eval Diff Test")
   df_cm_test2, class_repo_test2, f_score_test2, acc_test2 = model_evaluation(Y_pred, Y_test2)
 
   ### Load prior times
