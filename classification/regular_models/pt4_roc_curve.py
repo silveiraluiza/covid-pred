@@ -23,6 +23,12 @@ parser.add_argument('-i','--index',  type=int , help='n da rodada do script', re
 
 args = parser.parse_args()
 
+TELEBOT_TOKEN = "2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA"
+
+bot = telebot.TeleBot("2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA")
+bot.config['api_key'] = TELEBOT_TOKEN
+bot.get_me()
+
 gpus = tf.config.experimental.list_physical_devices("GPU")
 if gpus:
   try:
