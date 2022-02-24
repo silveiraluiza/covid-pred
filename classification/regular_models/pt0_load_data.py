@@ -165,18 +165,12 @@ def main():
 
   img_size = 300
 
-  images_train, labels_train = load_images(root_folder, "train", img_size)
   images_test, labels_test = load_images(root_folder, "test", img_size)
 
   print("Tamanho train e test 2")
-  print(len(images_train))
   print(len(images_test))
 
   # Formatando
-
-  X_train = np.array(images_train).reshape((len(images_train), img_size, img_size))
-  Y_train = keras.utils.to_categorical(labels_train)
-  X_train, Y_train = sklearn.utils.shuffle(X_train, Y_train, random_state = 587)
 
   X_test = np.array(images_test).reshape((len(images_test), img_size, img_size))
   X_test = np.stack((X_test,) * 3, axis = -1)
@@ -188,8 +182,7 @@ def main():
 
   np.save('input/X_test2.npy', X_test)
   np.save('input/Y_test2.npy', Y_test)
-  np.save('input/X_train2.npy', X_train)
-  np.save('input/Y_train2.npy', Y_train)
+  
 
   # Salvando epochs
   text_file = open("input/epochs.txt", "wt")

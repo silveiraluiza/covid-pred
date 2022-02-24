@@ -21,23 +21,22 @@ import datetime
 import sys
 import argparse
 
-parser = argparse.ArgumentParser(description='Processo avaliação de modelo')
-parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
-
-args = parser.parse_args()
-
 gpus = tf.config.experimental.list_physical_devices("GPU")
 if gpus:
   try:
     print("gpus existem")
     print(gpus)
-    # Currently, memory growth needs to be the same across GPUs
-    for gpu in gpus:
-      tf.config.experimental.set_memory_growth(gpu, True)
   except RuntimeError as e:
     print(e)
     
-    
+
+parser = argparse.ArgumentParser(description='Processo avaliação de modelo')
+parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
+
+args = parser.parse_args()
+
+ind = args.index
+
 TELEBOT_TOKEN = "2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA"
 
 bot = telebot.TeleBot("2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA")
@@ -107,7 +106,7 @@ def main():
 
   print("Eval Train")
   df_cm_train, class_repo_train, f_score_train, acc_train = model_evaluation(y_pred, Y_train)
-  del(Y_train,y_pred)
+  del(Y_train,y_pred, model)
 
   ### Eval Val
   tf.keras.backend.clear_session()
@@ -123,7 +122,7 @@ def main():
 
   print("Eval Val")
   df_cm_val, class_repo_val, f_score_val, acc_val = model_evaluation(Y_pred, Y_val)
-  del(Y_val)
+  del(Y_val, model)
 
   ### Eval Test
   tf.keras.backend.clear_session()
@@ -141,7 +140,7 @@ def main():
 
   print("Eval Test")
   df_cm_test, class_repo_test, f_score_test, acc_test = model_evaluation(Y_pred, Y_test)
-  del(Y_test)
+  del(Y_test,model)
   final_test = end-start
 
 
@@ -154,10 +153,33 @@ def main():
   model = keras.models.load_model(model_name)
   
   # Load Data
+
   X_test2 = np.load('input/X_test2.npy')
   Y_test2 = np.load('input/Y_test2.npy')
 
-  Y_pred = model.predict(X_test2, batch_size = 12)
+  print(X_test2.shape)
+  print(Y_test2.shape)
+  
+  train1, train2, train3, train4 = np.array_split(X_test2, 4)
+
+  del(X_test2)
+
+  # Pred Train 
+  Y_pred = model.predict(train1, batch_size=10)
+  del(train1)
+
+  Y_pred1 = model.predict(train2, batch_size=10)
+  del(train2)
+
+  Y_pred2 = model.predict(train3, batch_size=10)
+  del(train3)
+
+  Y_pred3 = model.predict(train4, batch_size=10)
+  del(train4)
+
+  Y_pred = np.concatenate((Y_pred, Y_pred1, Y_pred2, Y_pred3))
+  del(Y_pred1, Y_pred2, Y_pred3)
+
 
   print("Eval Diff Test")
   df_cm_test2, class_repo_test2, f_score_test2, acc_test2 = model_evaluation(Y_pred, Y_test2)
@@ -189,7 +211,7 @@ def main():
   n_epochs = 150
   drop = 0.5
   IMG_SIZE = (300,300,3)
-  ind = int(args.index)
+  
 
   old_csv = pd.read_csv("output/models_evaluation.csv", sep=';')
 
@@ -247,24 +269,6 @@ def main():
   new_csv = pd.concat([old_csv, csv])
 
   new_csv.to_csv("output/models_evaluation.csv", index=False, sep=';')
-
-
-  ### ROC Curve
-  del(X_test2,Y_test2)
-  tf.keras.backend.clear_session()
-  
-  model = keras.models.load_model(model_name)
-  X_test = np.load('input/X_test.npy')
-  Y_test = np.load('input/Y_test.npy')
-
-  Y_pred = model.predict(X_test, batch_size = 16)
-
-  i = 1
-  fpr, tpr, thresholds = roc_curve(Y_test[:, i], Y_pred[:, i])
-  data = {'fpr': fpr, 'tpr': tpr, 'thresholds': thresholds}
-  df = pd.DataFrame(data)
-  df.to_csv(f"output/nonsegmented_vgg16_roc_{ind}.csv", index = False)
-
 
 
 if __name__ == "__main__":
