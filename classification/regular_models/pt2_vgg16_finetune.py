@@ -22,6 +22,15 @@ import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import pickle
+import sys
+import argparse
+
+parser = argparse.ArgumentParser(description='Processo treinamento de modelo')
+parser.add_argument('-m','--model',  type=int , help='modelo', required=True)
+
+args = parser.parse_args()
+
+model_name = args.model
 
 gpus = tf.config.experimental.list_physical_devices("GPU")
 if gpus:
@@ -61,8 +70,20 @@ def main():
 
   print(f"Number of steps {steps_per_epoch}")
 
+  if model_name == "VGG16":
+    model_name = "cache/tl_vgg16_finetune.h5"
+  
+  elif model_name == "DenseNet":
+    model_name = "cache/tl_densenet121_finetune.h5"
+
+  elif model_name == "InceptionResNet":
+    model_name = "cache/tl_inceptionresnet.h5"
+
+  elif model_name == "ResNet152V2":
+    model_name = "cache/tl_resnet152finetune.h5"
+
   ### Model Finetune
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+ 
   model = keras.models.load_model(model_name)
 
   print("Modelo Finetune")
