@@ -67,7 +67,9 @@ def main():
   fpr, tpr, thresholds = roc_curve(Y_test[:, i], Y_pred[:, i])
   data = {'fpr': fpr, 'tpr': tpr, 'thresholds': thresholds}
   df = pd.DataFrame(data)
-  df.to_csv(f"output/nonsegmented_vgg16_roc_{ind}.csv", index = False)
+  model_name = model_name.split('/')[1]
+  
+  df.to_csv(f"output/nonsegmented_{model_name}_roc_{ind}.csv", index = False)
 
   bot.send_message("-600800507", f'Rede {model_name} - Curva ROC salva')
 
