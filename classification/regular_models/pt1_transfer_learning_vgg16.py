@@ -50,7 +50,7 @@ bot.config['api_key'] = TELEBOT_TOKEN
 bot.get_me()
 
 
-### Create Model
+### Create Models
 
 def create_model_VGG16():
   
@@ -92,6 +92,64 @@ def create_model_DNet():
   base_model.trainable = False
 
   x = keras.applications.densenet.preprocess_input(inputs)
+  x = base_model(x, training = False)
+  x = keras.layers.GlobalAveragePooling2D()(x)
+  x = keras.layers.Dense(1024, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  x = keras.layers.Dense(1024, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  x = keras.layers.Dense(512, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  output = keras.layers.Dense(3, activation = 'softmax')(x)
+
+  model = keras.Model(inputs = inputs, outputs = output)
+
+  return model, base_model
+
+def create_model_InceptionResNet():
+  
+  inputs = keras.Input(shape = (img_size, img_size, 3))
+  
+  base_model = keras.applications.InceptionResNetV2(
+    weights = "imagenet",
+    include_top = False,
+    input_shape = (img_size, img_size, 3)
+  )
+  base_model.trainable = False
+
+  x = keras.applications.inception_resnet_v2.preprocess_input(inputs)
+  x = base_model(x, training = False)
+  x = keras.layers.GlobalAveragePooling2D()(x)
+  x = keras.layers.Dense(1024, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  x = keras.layers.Dense(1024, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  x = keras.layers.Dense(512, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  output = keras.layers.Dense(3, activation = 'softmax')(x)
+
+  model = keras.Model(inputs = inputs, outputs = output)
+
+  return model, base_model
+
+def create_model_ResNet152V2():
+  
+  inputs = keras.Input(shape = (img_size, img_size, 3))
+  
+  base_model = keras.applications.ResNet152V2(
+    weights = "imagenet",
+    include_top = False,
+    input_shape = (img_size, img_size, 3)
+  )
+  base_model.trainable = False
+
+  x = keras.applications.resnet_v2.preprocess_input(inputs)
   x = base_model(x, training = False)
   x = keras.layers.GlobalAveragePooling2D()(x)
   x = keras.layers.Dense(1024, activation = "relu")(x)
@@ -153,6 +211,16 @@ def run_model(model_name):
     model_name = "cache/tl_densenet121.h5"
     create_model = create_model_DNet
     model_name_f = "cache/tl_densenet121_finetune.h5"
+
+  elif model_name == "InceptionResNet":
+    model_name = "cache/tl_inceptionresnet.h5"
+    create_model = create_model_InceptionResNet
+    model_name_f = "cache/tl_inceptionresnet.h5"
+
+  elif model_name == "ResNet152V2":
+    model_name = "cache/tl_resnet152.h5"
+    create_model = create_model_ResNet152V2
+    model_name_f = "cache/tl_resnet152finetune.h5"
 
   if (os.path.exists(model_name)):
     os.remove(model_name)
