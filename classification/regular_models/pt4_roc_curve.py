@@ -23,7 +23,6 @@ parser.add_argument('-i','--index',  type=int , help='n da rodada do script', re
 parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
-model_name = args.model
 
 TELEBOT_TOKEN = "2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA"
 
@@ -42,7 +41,8 @@ if gpus:
 def main():
 
   tf.keras.backend.clear_session()
-  
+  model_name = args.model
+
   if model_name == "VGG16":
     model_name = "cache/tl_vgg16_finetune.h5"
   

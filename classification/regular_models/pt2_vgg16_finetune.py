@@ -30,9 +30,8 @@ parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
 
-model_name = args.model
-
 gpus = tf.config.experimental.list_physical_devices("GPU")
+
 if gpus:
   try:
     print("gpus existem")
@@ -55,6 +54,7 @@ SEED = 587
 def main():
   np.random.seed(SEED)
   tf.keras.backend.clear_session()
+  model_name = args.model
 
   ### Load Datasets
   file_pi = open('input/train_dataset.pkl', 'rb') 
