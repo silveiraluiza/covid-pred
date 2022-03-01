@@ -20,8 +20,10 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Processo avaliação de modelo')
 parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
+parser.add_argument('-m','--model',  type=int , help='modelo', required=True)
 
 args = parser.parse_args()
+model_name = args.model
 
 TELEBOT_TOKEN = "2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA"
 
@@ -40,7 +42,19 @@ if gpus:
 def main():
 
   tf.keras.backend.clear_session()
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+  
+  if model_name == "VGG16":
+    model_name = "cache/tl_vgg16_finetune.h5"
+  
+  elif model_name == "DenseNet":
+    model_name = "cache/tl_densenet121_finetune.h5"
+
+  elif model_name == "InceptionResNet":
+    model_name = "cache/tl_inceptionresnet_finetune.h5"
+
+  elif model_name == "ResNet152V2":
+    model_name = "cache/tl_resnet152_finetune.h5"
+
   ind = int(args.index)
 
   model = keras.models.load_model(model_name)

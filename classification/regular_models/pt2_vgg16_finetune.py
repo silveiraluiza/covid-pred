@@ -77,10 +77,10 @@ def main():
     model_name = "cache/tl_densenet121_finetune.h5"
 
   elif model_name == "InceptionResNet":
-    model_name = "cache/tl_inceptionresnet.h5"
+    model_name = "cache/tl_inceptionresnet_finetune.h5"
 
   elif model_name == "ResNet152V2":
-    model_name = "cache/tl_resnet152finetune.h5"
+    model_name = "cache/tl_resnet152_finetune.h5"
 
   ### Model Finetune
  

@@ -215,12 +215,12 @@ def run_model(model_name):
   elif model_name == "InceptionResNet":
     model_name = "cache/tl_inceptionresnet.h5"
     create_model = create_model_InceptionResNet
-    model_name_f = "cache/tl_inceptionresnet.h5"
+    model_name_f = "cache/tl_inceptionresnet_finetune.h5"
 
   elif model_name == "ResNet152V2":
     model_name = "cache/tl_resnet152.h5"
     create_model = create_model_ResNet152V2
-    model_name_f = "cache/tl_resnet152finetune.h5"
+    model_name_f = "cache/tl_resnet152_finetune.h5"
 
   if (os.path.exists(model_name)):
     os.remove(model_name)
