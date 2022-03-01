@@ -195,13 +195,6 @@ def run_model(model_name):
     verbose = 1
   )
 
-  checkpointer = keras.callbacks.ModelCheckpoint(
-    model_name,
-    monitor = "val_accuracy",
-    verbose = 1, 
-    save_best_only = True
-  )
-
   if model_name == "VGG16":
     model_name = "cache/tl_vgg16.h5"
     create_model = create_model_VGG16
@@ -221,6 +214,13 @@ def run_model(model_name):
     model_name = "cache/tl_resnet152.h5"
     create_model = create_model_ResNet152V2
     model_name_f = "cache/tl_resnet152_finetune.h5"
+
+  checkpointer = keras.callbacks.ModelCheckpoint(
+    model_name,
+    monitor = "val_accuracy",
+    verbose = 1, 
+    save_best_only = True
+  )
 
   if (os.path.exists(model_name)):
     os.remove(model_name)
