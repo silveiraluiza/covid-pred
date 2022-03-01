@@ -19,6 +19,15 @@ from tensorflow import keras
 import datetime
 import pandas as pd
 import pickle
+import sys
+import argparse
+
+parser = argparse.ArgumentParser(description='Processo treinamento de modelo')
+parser.add_argument('-m','--model',  type=int , help='modelo', required=True)
+
+args = parser.parse_args()
+
+model_name = args.model
 
 gpus = tf.config.experimental.list_physical_devices("GPU")
 if gpus:
@@ -43,7 +52,7 @@ bot.get_me()
 
 ### Create Model
 
-def create_model():
+def create_model_VGG16():
   
   inputs = keras.Input(shape = (img_size, img_size, 3))
   
@@ -71,12 +80,41 @@ def create_model():
 
   return model, base_model
 
+def create_model_DNet():
+  
+  inputs = keras.Input(shape = (img_size, img_size, 3))
+  
+  base_model = keras.applications.DenseNet121(
+    weights = "imagenet",
+    include_top = False,
+    input_shape = (img_size, img_size, 3)
+  )
+  base_model.trainable = False
 
-def main():
+  x = keras.applications.densenet.preprocess_input(inputs)
+  x = base_model(x, training = False)
+  x = keras.layers.GlobalAveragePooling2D()(x)
+  x = keras.layers.Dense(1024, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  x = keras.layers.Dense(1024, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  x = keras.layers.Dense(512, activation = "relu")(x)
+  x = keras.layers.BatchNormalization()(x)
+  x = keras.layers.Dropout(0.5)(x)
+  output = keras.layers.Dense(3, activation = 'softmax')(x)
+
+  model = keras.Model(inputs = inputs, outputs = output)
+
+  return model, base_model
+
+def run_model(model_name):
+
   np.random.seed(SEED)
   ### Load Datasets
   tf.keras.backend.clear_session()
-  
+
   file_pi = open('input/train_dataset.pkl', 'rb') 
   train_generator =  pickle.load(file_pi)
 
@@ -99,16 +137,25 @@ def main():
     verbose = 1
   )
 
-  model_name = "cache/tl_vgg16_cd.h5"
-  if (os.path.exists(model_name)):
-    os.remove(model_name)
-
   checkpointer = keras.callbacks.ModelCheckpoint(
     model_name,
     monitor = "val_accuracy",
     verbose = 1, 
     save_best_only = True
   )
+
+  if model_name == "VGG16":
+    model_name = "cache/tl_vgg16.h5"
+    create_model = create_model_VGG16
+    model_name_f = "cache/tl_vgg16_finetune.h5"
+  
+  elif model_name == "DenseNet":
+    model_name = "cache/tl_densenet121.h5"
+    create_model = create_model_DNet
+    model_name_f = "cache/tl_densenet121_finetune.h5"
+
+  if (os.path.exists(model_name)):
+    os.remove(model_name)
 
   if (os.path.exists(model_name)):
     model = keras.models.load_model(model_name)
@@ -139,11 +186,11 @@ def main():
   bot.send_message("-600800507", f'Rede {model_name} - Treinamento Finalizado em {time_hours}')
 
   ## Inicialização do finetune e salvando ele
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
-  if (os.path.exists(model_name)):
-    os.remove(model_name)
 
-  if (os.path.exists(model_name)):
+  if (os.path.exists(model_name_f)):
+    os.remove(model_name_f)
+
+  if (os.path.exists(model_name_f)):
     print("existe")
     model = keras.models.load_model(model_name)
     
@@ -151,13 +198,21 @@ def main():
     base_model.trainable = True
     adam_opt = keras.optimizers.Adam(learning_rate = 0.0001)
     model.compile(optimizer = adam_opt, loss = "categorical_crossentropy", metrics = ["accuracy"])
-    model.save('cache/tl_vgg16_finetune_cd.h5')
+    model.save(model_name_f)
     
   #### Save times
   text_file = open("input/time_train.txt", "wt")
   n = text_file.write(str(final_train1))
   text_file.close()
+  
+  
+  
+  
+  
+def main():
 
+  modelo = model_name
+  run_model(modelo)
 
 if __name__ == "__main__":
     main()
