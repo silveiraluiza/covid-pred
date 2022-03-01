@@ -20,7 +20,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Processo avaliação de modelo')
 parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
-parser.add_argument('-m','--model',  type=int , help='modelo', required=True)
+parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
 model_name = args.model

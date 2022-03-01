@@ -26,7 +26,7 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser(description='Processo treinamento de modelo')
-parser.add_argument('-m','--model',  type=int , help='modelo', required=True)
+parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
 
