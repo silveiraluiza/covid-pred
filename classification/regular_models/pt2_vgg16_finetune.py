@@ -69,12 +69,15 @@ def main():
   steps_per_epoch = int(steps_per_epoch)
 
   print(f"Number of steps {steps_per_epoch}")
-
+  
+  epochs = 100
+  
   if model_name == "VGG16":
     model_name = "cache/tl_vgg16_finetune.h5"
   
   elif model_name == "DenseNet":
     model_name = "cache/tl_densenet121_finetune.h5"
+    epochs = 150
 
   elif model_name == "InceptionResNet":
     model_name = "cache/tl_inceptionresnet_finetune.h5"
@@ -106,7 +109,7 @@ def main():
   start = time.time()    
   fit = model.fit(train_generator, 
       steps_per_epoch = steps_per_epoch, 
-      epochs = 100,
+      epochs = epochs,
       validation_data = (X_val, Y_val),
       callbacks = [
         checkpointer,

@@ -168,6 +168,7 @@ def create_model_ResNet152V2():
   return model, base_model
 
 def run_model(model_name):
+  LAYERS_START = 0
 
   np.random.seed(SEED)
   ### Load Datasets
@@ -264,6 +265,17 @@ def run_model(model_name):
     
   else:
     base_model.trainable = True
+
+
+    if model_name == "cache/tl_densenet121.h5":
+      LAYERS_START = int(len(base_model.layers) * 0.5)
+    # Fine-tune from this layer onwards
+    fine_tune_at = LAYERS_START
+
+    # Freeze all the layers before the `fine_tune_at` layer
+    for layer in base_model.layers[:fine_tune_at]:
+      layer.trainable =  False
+
     adam_opt = keras.optimizers.Adam(learning_rate = 0.0001)
     model.compile(optimizer = adam_opt, loss = "categorical_crossentropy", metrics = ["accuracy"])
     model.save(model_name_f)
