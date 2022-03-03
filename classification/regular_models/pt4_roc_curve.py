@@ -20,6 +20,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Processo avaliação de modelo')
 parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
+parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
 
@@ -40,7 +41,20 @@ if gpus:
 def main():
 
   tf.keras.backend.clear_session()
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+  model_name = args.model
+
+  if model_name == "VGG16":
+    model_name = "cache/tl_vgg16_finetune.h5"
+  
+  elif model_name == "DenseNet":
+    model_name = "cache/tl_densenet121_finetune.h5"
+
+  elif model_name == "InceptionResNet":
+    model_name = "cache/tl_inceptionresnet_finetune.h5"
+
+  elif model_name == "ResNet152V2":
+    model_name = "cache/tl_resnet152_finetune.h5"
+
   ind = int(args.index)
 
   model = keras.models.load_model(model_name)
@@ -53,7 +67,9 @@ def main():
   fpr, tpr, thresholds = roc_curve(Y_test[:, i], Y_pred[:, i])
   data = {'fpr': fpr, 'tpr': tpr, 'thresholds': thresholds}
   df = pd.DataFrame(data)
-  df.to_csv(f"output/nonsegmented_vgg16_roc_{ind}.csv", index = False)
+  model_name = model_name.split('/')[1]
+  
+  df.to_csv(f"output/nonsegmented_{model_name}_roc_{ind}.csv", index = False)
 
   bot.send_message("-600800507", f'Rede {model_name} - Curva ROC salva')
 

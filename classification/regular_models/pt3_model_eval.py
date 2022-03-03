@@ -32,10 +32,9 @@ if gpus:
 
 parser = argparse.ArgumentParser(description='Processo avaliação de modelo')
 parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
+parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
-
-ind = args.index
 
 TELEBOT_TOKEN = "2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA"
 
@@ -65,6 +64,8 @@ def model_evaluation(y_pred, Y_true):
 def main():
 
   tf.keras.backend.clear_session()
+  model_name = args.model
+  ind = args.index
 
   ## Load Datasets
   X_train = np.load('input/X_train.npy')
@@ -73,7 +74,19 @@ def main():
 
   ### Load Model
 
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+  
+  if model_name == "VGG16":
+    model_name = "cache/tl_vgg16_finetune.h5"
+  
+  elif model_name == "DenseNet":
+    model_name = "cache/tl_densenet121_finetune.h5"
+
+  elif model_name == "InceptionResNet":
+    model_name = "cache/tl_inceptionresnet_finetune.h5"
+
+  elif model_name == "ResNet152V2":
+    model_name = "cache/tl_resnet152_finetune.h5"
+
   model = keras.models.load_model(model_name)
 
 
@@ -110,7 +123,7 @@ def main():
 
   ### Eval Val
   tf.keras.backend.clear_session()
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+
   model = keras.models.load_model(model_name)
   
   ## Load Datasets
@@ -126,7 +139,7 @@ def main():
 
   ### Eval Test
   tf.keras.backend.clear_session()
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+
   model = keras.models.load_model(model_name)
   
   ## Load Datasets
@@ -149,7 +162,7 @@ def main():
   del(Y_pred)
 
   tf.keras.backend.clear_session()
-  model_name = "cache/tl_vgg16_finetune_cd.h5"
+  
   model = keras.models.load_model(model_name)
   
   # Load Data
