@@ -120,8 +120,8 @@ def create_model_InceptionResNet():
   )
   base_model.trainable = False
 
-  x = keras.applications.inception_resnet_v2.preprocess_input(inputs)
-  x = base_model(x, training = False)
+  #x = keras.applications.inception_resnet_v2.preprocess_input(inputs)
+  x = base_model(inputs, training = False)
   x = keras.layers.GlobalAveragePooling2D()(x)
   x = keras.layers.Dense(1024, activation = "relu")(x)
   x = keras.layers.BatchNormalization()(x)
@@ -149,8 +149,8 @@ def create_model_ResNet152V2():
   )
   base_model.trainable = False
 
-  x = keras.applications.resnet_v2.preprocess_input(inputs)
-  x = base_model(x, training = False)
+  #x = keras.applications.resnet_v2.preprocess_input(inputs)
+  x = base_model(inputs, training = False)
   x = keras.layers.GlobalAveragePooling2D()(x)
   x = keras.layers.Dense(1024, activation = "relu")(x)
   x = keras.layers.BatchNormalization()(x)
@@ -267,7 +267,7 @@ def run_model(model_name):
     base_model.trainable = True
 
 
-    if model_name == "cache/tl_densenet121.h5":
+    if (model_name != "cache/tl_vgg16.h5"):
       LAYERS_START = int(len(base_model.layers) * 0.5)
     # Fine-tune from this layer onwards
     fine_tune_at = LAYERS_START

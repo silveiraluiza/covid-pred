@@ -81,9 +81,11 @@ def main():
 
   elif model_name == "InceptionResNet":
     model_name = "cache/tl_inceptionresnet_finetune.h5"
+    epochs = 150
 
   elif model_name == "ResNet152V2":
     model_name = "cache/tl_resnet152_finetune.h5"
+    epochs = 150
 
   ### Model Finetune
  

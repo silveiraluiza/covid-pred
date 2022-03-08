@@ -3,7 +3,7 @@
 source ~/anaconda3/etc/profile.d/conda.sh
 conda activate tensorflow
 
-for i in  1 2 3 4 5 # 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+for i in  5 6 7 8 9 10 #1 2 3 4 11 12 13 14 15 16 17 18 19 20
 do
   echo "counter: $i"
   
@@ -13,5 +13,5 @@ do
   
   cd /home/dell/Documentos/covid-dissert/classification/regular_models && python pt0_load_data.py 
   
-  python pt1_transfer_learning_vgg16.py -m DenseNet && python pt2_vgg16_finetune.py -m DenseNet && python pt3_model_eval.py -i $i -m DenseNet && python pt4_roc_curve.py -i $i -m DenseNet
+  python pt1_transfer_learning_vgg16.py -m InceptionResNet && python pt2_vgg16_finetune.py -m InceptionResNet && python pt3_model_eval.py -i $i -m InceptionResNet && python pt4_roc_curve.py -i $i -m InceptionResNet
 done
