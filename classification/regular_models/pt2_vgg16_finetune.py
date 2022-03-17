@@ -26,9 +26,13 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser(description='Processo treinamento de modelo')
+parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
 parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
+
 args = parser.parse_args()
+model_name = args.model
+ind = args.index
 
 gpus = tf.config.experimental.list_physical_devices("GPU")
 
