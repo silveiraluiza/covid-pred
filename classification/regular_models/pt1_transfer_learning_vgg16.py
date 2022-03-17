@@ -23,11 +23,13 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser(description='Processo treinamento de modelo')
+parser.add_argument('-i','--index',  type=int , help='n da rodada do script', required=True)
 parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
 
 args = parser.parse_args()
 
 model_name = args.model
+ind = args.index
 
 gpus = tf.config.experimental.list_physical_devices("GPU")
 if gpus:
@@ -91,8 +93,8 @@ def create_model_DNet():
   )
   base_model.trainable = False
 
-  x = keras.applications.densenet.preprocess_input(inputs)
-  x = base_model(x, training = False)
+  #x = keras.applications.densenet.preprocess_input(inputs)
+  x = base_model(inputs, training = False)
   x = keras.layers.GlobalAveragePooling2D()(x)
   x = keras.layers.Dense(1024, activation = "relu")(x)
   x = keras.layers.BatchNormalization()(x)
@@ -270,7 +272,12 @@ def run_model(model_name):
     if (model_name != "cache/tl_vgg16.h5"):
       LAYERS_START = int(len(base_model.layers) * 0.5)
     # Fine-tune from this layer onwards
+    
+    elif (model_name == "cache/tl_densenet121.h5"):
+      LAYERS_START = int(len(base_model.layers) * 0.65)
+    
     fine_tune_at = LAYERS_START
+    
 
     # Freeze all the layers before the `fine_tune_at` layer
     for layer in base_model.layers[:fine_tune_at]:

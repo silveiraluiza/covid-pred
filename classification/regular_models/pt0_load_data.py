@@ -33,6 +33,17 @@ import lime
 from lime import lime_image
 
 import pandas as pd
+import sys
+import argparse
+
+parser = argparse.ArgumentParser(description='Processo treinamento de modelo')
+parser.add_argument('-i','--index',  type=int , help='numero de execução', required=True)
+parser.add_argument('-m','--model',  type=str , help='modelo', required=True)
+
+args = parser.parse_args()
+
+model_name = args.model
+ind = args.index
 
 gpus = tf.config.experimental.list_physical_devices("GPU")
 if gpus:
@@ -96,7 +107,10 @@ class AugmentationSequence(keras.utils.Sequence):
 def main():
 
   ### Load Images
-
+  print(f"Iniciando iteração nº {ind} do Modelo {model_name}")
+  bot.send_message("-600800507", f"Iniciando iteração nº {ind} do Modelo {model_name}")
+  
+  
   root_folder = "../../3_Images"
 
   img_size = 300
