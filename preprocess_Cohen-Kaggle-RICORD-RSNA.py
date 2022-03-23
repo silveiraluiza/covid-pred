@@ -4,10 +4,15 @@ import re
 import random
 import cv2
 import numpy as np
+import telebot
 # Split data in training/testing using a 80/20 distribution
 # The distribution is centered around the patient since each person can have multiple images in different days
 # So the idea is to keep all images from the same patient all in the same set (either train or test)
+TELEBOT_TOKEN = "2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA"
 
+bot = telebot.TeleBot("2058519653:AAG5Kf0Othtye8e13F5WPnBQQSdoCt47ifA")
+bot.config['api_key'] = TELEBOT_TOKEN
+bot.get_me()
 
 # The dataset is composed by CXR images of pneumonia (any other, except COVID-19), COVID-19 and Normal.
 source_folders = [ "Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"] #"BIMCV"
@@ -21,6 +26,8 @@ cwd = os.getcwd()
 
 clahe = cv2.createCLAHE(clipLimit = 2.0, tileGridSize = (8, 8))
 
+
+bot.send_message("-600800507", f"Iniciando separação de treino e teste")
 # Remove destination dir, if present, just for start clean
 if os.path.isdir(dest_folder):
   shutil.rmtree(dest_folder)
