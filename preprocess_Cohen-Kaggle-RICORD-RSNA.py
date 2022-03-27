@@ -81,13 +81,14 @@ for folder in source_folders:
           )
 
           # Well, let's already apply CLAHE to improve the CXR contrast and brightness
-          img = cv2.imread(os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext), 0)
+          img = cv2.imread(os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext), cv2.IMREAD_COLOR)
           os.remove(os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext))
           #img = clahe.apply(img)
 
           # Let's also resize the images so that all of them are standardize
           # Skip the image if it is too small
-          w, h = img.shape
+          print(img.shape)
+          w, h = img.shape[:-1]
           if w < 250:
             continue
 
