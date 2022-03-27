@@ -18,8 +18,8 @@ bot.get_me()
 source_folders = [ "Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"] #"BIMCV"
 pneumonia_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity"]
 pathogen_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity", "COVID-19", "Normal"]
-origin_folder = "2_Raw"
-dest_folder = "3_Images"
+origin_folder = "2_Raw_Seg"
+dest_folder = "3_Images_Seg"
 
 img_size = 400
 cwd = os.getcwd()
