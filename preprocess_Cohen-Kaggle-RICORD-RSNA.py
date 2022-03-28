@@ -59,6 +59,7 @@ for folder in source_folders:
       for (root, dirs, files) in os.walk(pathogen_folder, topdown = True):
         pid_list = {}
         for file in files:
+          print(file)
           _, pid, offset = re.split("[P_]", os.path.splitext(file)[0])
 
           # If pid was not assigned to a group

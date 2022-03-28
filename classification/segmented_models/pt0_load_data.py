@@ -111,7 +111,7 @@ def main():
   bot.send_message("-600800507", f"Iniciando iteração nº {ind} do Modelo {model_name}")
   
   
-  root_folder = "../../3_Images_Seg
+  root_folder = "../../3_Images_Seg"
 
   img_size = 300
 
