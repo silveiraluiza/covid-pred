@@ -13,5 +13,5 @@
 - [Cohen](https://github.com/v7labs/covid-19-xray-dataset)
 - [Montgomery](https://lhncbc.nlm.nih.gov/LHC-publications/pubs/TuberculosisChestXrayImageDataSets.html)
 - [JSRT](https://researchdata.edu.au/lung-segmentation-kit/1376776)
-- [Shenzen](https://www.kaggle.com/datasets/raddar/tuberculosis-chest-xrays-shenzhen)[Masks](https://www.kaggle.com/datasets/yoctoman/shcxr-lung-mask)
+- [Shenzen](https://www.kaggle.com/datasets/raddar/tuberculosis-chest-xrays-shenzhen) / [Masks](https://www.kaggle.com/datasets/yoctoman/shcxr-lung-mask)
 
