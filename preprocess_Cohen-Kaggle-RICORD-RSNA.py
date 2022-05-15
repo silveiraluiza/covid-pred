@@ -107,3 +107,27 @@ for folder in source_folders:
             mask_img = cv2.resize(mask_img, (img_size, img_size), interpolation = cv2.INTER_CUBIC)
             new_mask_filename = "%s_%s_%s_%s_%s.png" % (target_folder, folder, pathogen_coded, pid, offset)
             cv2.imwrite(os.path.join(dest_folder, "masks", new_mask_filename), mask_img)
+
+
+gan = True
+
+if (gan == True):
+
+  source = '/home/dell/Documentos/covid-dissert/augmentation/Results/Pneumonia_Imgs/'
+  files = os.listdir(source)
+  dest = "/home/dell/Documentos/covid-dissert/3_Images/train/Opacity/"
+  for file_name in random.sample(files, 500):
+    shutil.move(os.path.join(source, file_name), dest)
+  
+  source = '/home/dell/Documentos/covid-dissert/augmentation/Results/COVID-19_Imgs/'
+  files = os.listdir(source)
+  dest = "/home/dell/Documentos/covid-dissert/3_Images/train/COVID-19/"
+  for file_name in random.sample(files, 500):
+    shutil.move(os.path.join(source, file_name), dest)
+
+
+  source = '/home/dell/Documentos/covid-dissert/augmentation/Results/Normal_Imgs/'
+  files = os.listdir(source)
+  dest = "/home/dell/Documentos/covid-dissert/3_Images/train/Normal/"
+  for file_name in random.sample(files, 500):
+    shutil.move(os.path.join(source, file_name), dest)
