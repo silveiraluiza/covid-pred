@@ -104,22 +104,22 @@ def main():
   del(X_train)
 
   # Pred Train 
-  Y_pred = model.predict(train1, batch_size=5)
+  Y_pred = model.predict(train1, batch_size=2)
   del(train1)
 
-  Y_pred1 = model.predict(train2, batch_size=5)
+  Y_pred1 = model.predict(train2, batch_size=2)
   del(train2)
 
-  Y_pred2 = model.predict(train3, batch_size=5)
+  Y_pred2 = model.predict(train3, batch_size=2)
   del(train3)
 
-  Y_pred3 = model.predict(train4, batch_size=5)
+  Y_pred3 = model.predict(train4, batch_size=2)
   del(train4)
 
-  Y_pred4 = model.predict(train5, batch_size=5)
+  Y_pred4 = model.predict(train5, batch_size=2)
   del(train5)
 
-  Y_pred5 = model.predict(train6, batch_size=5)
+  Y_pred5 = model.predict(train6, batch_size=2)
   del(train6)
 
   y_pred = np.concatenate((Y_pred, Y_pred1, Y_pred2, Y_pred3, Y_pred4, Y_pred5))
@@ -186,16 +186,16 @@ def main():
   del(X_test2)
 
   # Pred Train 
-  Y_pred = model.predict(train1, batch_size=10)
+  Y_pred = model.predict(train1, batch_size=5)
   del(train1)
 
-  Y_pred1 = model.predict(train2, batch_size=10)
+  Y_pred1 = model.predict(train2, batch_size=5)
   del(train2)
 
-  Y_pred2 = model.predict(train3, batch_size=10)
+  Y_pred2 = model.predict(train3, batch_size=5)
   del(train3)
 
-  Y_pred3 = model.predict(train4, batch_size=10)
+  Y_pred3 = model.predict(train4, batch_size=5)
   del(train4)
 
   Y_pred = np.concatenate((Y_pred, Y_pred1, Y_pred2, Y_pred3))

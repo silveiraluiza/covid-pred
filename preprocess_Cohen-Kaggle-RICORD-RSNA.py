@@ -117,17 +117,17 @@ if (gan == True):
   files = os.listdir(source)
   dest = "/home/dell/Documentos/covid-dissert/3_Images/train/Opacity/"
   for file_name in random.sample(files, 500):
-    shutil.move(os.path.join(source, file_name), dest)
+    shutil.copy2(os.path.join(source, file_name), dest)
   
   source = '/home/dell/Documentos/covid-dissert/augmentation/Results/COVID-19_Imgs/'
   files = os.listdir(source)
   dest = "/home/dell/Documentos/covid-dissert/3_Images/train/COVID-19/"
   for file_name in random.sample(files, 500):
-    shutil.move(os.path.join(source, file_name), dest)
+    shutil.copy2(os.path.join(source, file_name), dest)
 
 
   source = '/home/dell/Documentos/covid-dissert/augmentation/Results/Normal_Imgs/'
   files = os.listdir(source)
   dest = "/home/dell/Documentos/covid-dissert/3_Images/train/Normal/"
   for file_name in random.sample(files, 500):
-    shutil.move(os.path.join(source, file_name), dest)
+    shutil.copy2(os.path.join(source, file_name), dest)
