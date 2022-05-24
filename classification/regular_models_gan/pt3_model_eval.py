@@ -69,22 +69,21 @@ def main():
 
   ## Load Datasets
   X_train = np.load('input/X_train.npy')
-  Y_train = np.load('input/Y_train.npy')
 
 
   ### Load Model
 
   
-  if model_name == "VGG16":
+  if model_name.strip() == "VGG16":
     model_name = "cache/tl_vgg16_finetune.h5"
   
-  elif model_name == "DenseNet":
+  elif model_name.strip() == "DenseNet":
     model_name = "cache/tl_densenet121_finetune.h5"
 
-  elif model_name == "InceptionResNet":
+  elif model_name.strip() == "InceptionResNet":
     model_name = "cache/tl_inceptionresnet_finetune.h5"
 
-  elif model_name == "ResNet152V2":
+  elif model_name.strip() == "ResNet152V2":
     model_name = "cache/tl_resnet152_finetune.h5"
 
   model = keras.models.load_model(model_name)
@@ -124,6 +123,8 @@ def main():
 
   y_pred = np.concatenate((Y_pred, Y_pred1, Y_pred2, Y_pred3, Y_pred4, Y_pred5))
   del(Y_pred, Y_pred1, Y_pred2, Y_pred3, Y_pred4, Y_pred5)
+
+  Y_train = np.load('input/Y_train.npy')
 
   print("Eval Train")
   df_cm_train, class_repo_train, f_score_train, acc_train = model_evaluation(y_pred, Y_train)
