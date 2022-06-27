@@ -10,11 +10,11 @@ import numpy as np
 
 
 # The dataset is composed by CXR images of pneumonia (any other, except COVID-19), COVID-19 and Normal.
-source_folders = [ "BIMCV", "OCT"] #"Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"
+source_folders = [ "RICORD", "RSNA"] #"Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"
 pneumonia_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity"]
 pathogen_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity", "COVID-19", "Normal"]
-origin_folder = "2_Raw_Seg"
-dest_folder = "3_Images_Tests_Seg"
+origin_folder = "2_Raw"
+dest_folder = "3_Images_Tests"
 
 img_size = 400
 cwd = os.getcwd()
@@ -68,10 +68,14 @@ for folder in source_folders:
           shutil.copy2(os.path.join(root, file), os.path.join(dest_folder, target_folder, pathogen_coded))
           new_filename = "%s_%s_%s_%s" % (folder, pathogen_coded, pid, offset)
           new_filename_ext = "%s%s" % (new_filename, os.path.splitext(file)[-1])
-          os.rename(
-            os.path.join(dest_folder, target_folder, pathogen_coded, file),
-            os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext),
-          )
+          
+          new_name = os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext)
+          
+          if not os.path.exists(new_name):
+            os.rename(
+              os.path.join(dest_folder, target_folder, pathogen_coded, file),
+              os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext),
+            )
 
           # Well, let's already apply CLAHE to improve the CXR contrast and brightness
           img = cv2.imread(os.path.join(dest_folder, target_folder, pathogen_coded, new_filename_ext), 0)

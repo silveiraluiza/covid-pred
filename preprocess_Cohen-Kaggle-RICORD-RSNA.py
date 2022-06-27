@@ -18,8 +18,8 @@ bot.get_me()
 source_folders = [ "Cohen", "RSNA", "Actualmed", "Figure1", "KaggleCRD", "RICORD"] #"BIMCV"
 pneumonia_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity"]
 pathogen_folders = ["Bacteria", "Fungi", "Virus", "Pneumonia", "Lung Opacity", "COVID-19", "Normal"]
-origin_folder = "2_Raw"
-dest_folder = "3_Images"
+origin_folder = "2_Raw_Seg"
+dest_folder = "3_Images_Seg"
 
 img_size = 400
 cwd = os.getcwd()
@@ -115,19 +115,19 @@ if (gan == True):
 
   source = '/home/dell/Documentos/covid-dissert/augmentation/Results/Pneumonia_Imgs/'
   files = os.listdir(source)
-  dest = "/home/dell/Documentos/covid-dissert/3_Images/train/Opacity/"
+  dest = "/home/dell/Documentos/covid-dissert/3_Images_Seg/train/Opacity/"
   for file_name in random.sample(files, 500):
     shutil.copy2(os.path.join(source, file_name), dest)
   
   source = '/home/dell/Documentos/covid-dissert/augmentation/Results/COVID-19_Imgs/'
   files = os.listdir(source)
-  dest = "/home/dell/Documentos/covid-dissert/3_Images/train/COVID-19/"
+  dest = "/home/dell/Documentos/covid-dissert/3_Images_Seg/train/COVID-19/"
   for file_name in random.sample(files, 500):
     shutil.copy2(os.path.join(source, file_name), dest)
 
 
   source = '/home/dell/Documentos/covid-dissert/augmentation/Results/Normal_Imgs/'
   files = os.listdir(source)
-  dest = "/home/dell/Documentos/covid-dissert/3_Images/train/Normal/"
+  dest = "/home/dell/Documentos/covid-dissert/3_Images_Seg/train/Normal/"
   for file_name in random.sample(files, 500):
     shutil.copy2(os.path.join(source, file_name), dest)
