@@ -69,7 +69,7 @@ def main():
   df = pd.DataFrame(data)
   model_name = model_name.split('/')[1]
   
-  df.to_csv(f"output/nonsegmented_{model_name}_roc_{ind}.csv", index = False)
+  df.to_csv(f"output/nonsegmented_BIMCV_{model_name}_roc_{ind}.csv", index = False)
 
   bot.send_message("-600800507", f'Rede {model_name} - Curva ROC salva')
 
