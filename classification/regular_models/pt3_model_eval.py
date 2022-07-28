@@ -214,7 +214,7 @@ def main():
   
   csv = pd.DataFrame()
   csv["model"] = [model_name]
-  csv["base"] = ["Cohen-OCT-Kaggle-BIMCV"]
+  csv["base"] = ["Cohen-BIMCV-Kaggle-OCT"]
   csv["tempo_treino"] = tfinal
   csv["tempo_pred"] = [None] #final_test
   csv["full_retrain"] = True
@@ -254,7 +254,7 @@ def main():
   csv["confusion_matrix_test_diff"] = [None] #[df_cm_test2]
 
   csv["epochs"] = [n_epochs]
-  csv["augmentation"] = ["simple + GAN"]
+  csv["augmentation"] = ["simple"]
   csv["dropout"] = [drop]
   csv["opt"] = "Adam"
       
